@@ -1,14 +1,4 @@
-# Introduction
-Typically, Chef is used to configure a node and something like Capistrano is used to deploy code. In this solution, Chef is used to both bootstrap the node and deploy a docker image. Subsequent chef-client runs will deploy the latest application docker image with zero downtime.
 
-# Strategic Overview
-A front facing native nginx web server accepts http requests on port 80 and forwards these requests upstream to a docker container listening on either port 80 or 81. Chef will create a sibling release container on the alternate port (either 81 or 82 depending on which is available) and then gracefully restart the front facing nginx web server to forward requests to the new docker container.
-
-![Chef logic overview](http://i.imgur.com/68j1zmr.png)
-
-# Four steps to Chef logic.
-
-```
 # 1. Initial server configuration and setup
 
 include_recipe 'apt::default'
@@ -97,9 +87,3 @@ ruby_block 'discover port used by the current container' do
       shell_out(command).stdout.to_s
     end
   end
-
-```
-# Note
-  * Assumes password-less sudo on your server for docker commands (default on AWS)
-  * Chef-client must be run a second time after provisioning a fresh node (known bug)
-  * Test success using /test-app.txt

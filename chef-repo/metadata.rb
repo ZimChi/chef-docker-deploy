@@ -1,0 +1,10 @@
+name 'chef-repo'
+maintainer 'Chielo Zimmerman'
+maintainer_email 'chielo@coshx.com'
+license ''
+description 'Chef is used to both bootstrap the node and deploy a docker image'
+long_description ''
+version '1.0'
+
+depends 'docker', '~> 2.9.7'
+depends 'apt-docker', '~> 0.3.0'
